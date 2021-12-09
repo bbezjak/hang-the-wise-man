@@ -1,8 +1,13 @@
 // import logo from './logo.svg';
-import './App.sass';
-import { EnterPlayerName } from './pages/EnterPlayerName';
+import { useSelector } from "react-redux";
+import { EnterPlayerName } from "./pages/EnterPlayerName";
+import { PlayHangman } from "./pages/PlayHangman";
+
+import "./App.sass";
 
 const App = () => {
+  const store = useSelector((state: any) => state.mode);
+
   return (
     // <div className="App">
     //   <header className="App-header">
@@ -20,9 +25,13 @@ const App = () => {
     //     </a>
     //   </header>
     // </div>
-    <EnterPlayerName />
 
+    <>
+      {store === "REGISTER" && <EnterPlayerName />}
+      {store === "GAME" && <PlayHangman></PlayHangman>}
+      {store === "HIGHSCORE" && <h1>Highscore</h1>}
+    </>
   );
-}
+};
 
 export default App;

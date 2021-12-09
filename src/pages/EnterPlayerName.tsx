@@ -1,10 +1,15 @@
 import { useState } from "react";
+import { startNewGame } from "../store/actions/startGameAction";
+import store from "../store";
+import { fetchQuote } from "../store/actions/fetchQuote";
 
 export const EnterPlayerName = () => {
   const [input, setInput] = useState("");
 
   const startGame = () => {
     console.log(input);
+    startNewGame(store.dispatch, input);
+    fetchQuote(store.dispatch);
   };
 
   return (

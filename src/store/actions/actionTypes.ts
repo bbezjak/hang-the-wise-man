@@ -1,0 +1,2 @@
+export const FETCH_QUOTE = "FETCH_QUOTE";
+export const SAVE_USERNAME = "SAVE_USERNAME";
