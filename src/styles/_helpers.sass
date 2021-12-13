@@ -1,10 +1,13 @@
 .page
-    min-height: 100vh
+    min-height: calc( 100vh - 55px )
 
 .page-title
-    position: absolute
-    top: 5px
+    // position: fixed
+    left: 50%
+    // transform: translateX(-50%)
     text-align: center
+    height: 40px
+    margin: 15px 0 0 0
 
 .d-flex
     display: flex
@@ -15,6 +18,9 @@
 .width-fit-content
     width: fit-content
 
+.width-100
+    width: 100%    
+
 .flex-column
     flex-direction: column
 
@@ -23,3 +29,6 @@
 
 .align-center
     align-items: center
+
+.text-center
+    text-align: center

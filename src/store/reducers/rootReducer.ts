@@ -1,10 +1,11 @@
 import { FETCH_QUOTE, SAVE_USERNAME } from "../actions/actionTypes";
+import { FETCH_HIGHSCORES } from './../actions/actionTypes';
 
 const initialState = {
   response: {},
   mode: "REGISTER",
   userName: "",
-  startTime: null as (number | null),
+  startTime: null as number | null,
 };
 
 export default function rootReducer(state = initialState, action: any) {
@@ -19,7 +20,13 @@ export default function rootReducer(state = initialState, action: any) {
         ...state,
         mode: "GAME",
         response: action.payload,
-        startTime: Date.now()
+        startTime: Date.now(),
+      };
+    case FETCH_HIGHSCORES:
+      return {
+        ...state,
+        mode: "HIGHSCORES",
+        response: action.payload,
       };
     default:
       return state;

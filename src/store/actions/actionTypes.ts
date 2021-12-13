@@ -1,2 +1,3 @@
 export const FETCH_QUOTE = "FETCH_QUOTE";
 export const SAVE_USERNAME = "SAVE_USERNAME";
+export const FETCH_HIGHSCORES = "FETCH_HIGHSCORES";

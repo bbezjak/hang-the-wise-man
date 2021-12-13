@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { LetterButton } from './LetterButton';
 
 export const VirtualKeyboard = (props: {
   activateLetter: (letter: string) => void;
@@ -16,15 +17,14 @@ export const VirtualKeyboard = (props: {
   };
 
   return (
-    <div>
+    <div className="text-center">
       {alphabet.map((letter) => (
-        <button
+        <LetterButton
           key={letter}
           disabled={isButtonActive(letter) || props.disableKeyboard}
           onClick={() => props.activateLetter(letter)}
-        >
-          {letter}
-        </button>
+          text={letter}
+        ></LetterButton>
       ))}
     </div>
   );
