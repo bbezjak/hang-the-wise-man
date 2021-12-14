@@ -106,6 +106,8 @@ export const PlayHangman = () => {
      
       <h2>Welcome {user}</h2>
 
+      <p>{startTime} - {endTime}</p>
+
       <HangmanDrawing errors={errorNumber}></HangmanDrawing>
 
       <ErrorCounter errorCount={errorNumber} />

@@ -1,13 +1,15 @@
 import axios from "axios";
-import { FETCH_QUOTE } from "./actionTypes";
+import { FETCH_HIGHSCORES } from "./actionTypes";
 
 export async function fetchHighscore(dispatch: any) {
   const { data } = await axios.get(
     "https://my-json-server.typicode.com/stanko-ingemark/hang_the_wise_man_frontend_task/highscores"
   );
 
+  debugger
+
   dispatch({
-    type: FETCH_QUOTE,
+    type: FETCH_HIGHSCORES,
     payload: data,
   });
 }

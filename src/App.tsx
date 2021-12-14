@@ -4,6 +4,7 @@ import { EnterPlayerName } from "./pages/EnterPlayerName";
 import { PlayHangman } from "./pages/PlayHangman";
 
 import "./App.sass";
+import { Highscores } from "./pages/HighScores";
 
 const App = () => {
   const store = useSelector((state: any) => state.mode);
@@ -27,9 +28,10 @@ const App = () => {
     // </div>
 
     <>
+    <p>{store}</p>
       {store === "REGISTER" && <EnterPlayerName />}
       {store === "GAME" && <PlayHangman></PlayHangman>}
-      {store === "HIGHSCORE" && <h1>Highscore</h1>}
+      {store === "HIGHSCORES" && <Highscores/>}
     </>
   );
 };

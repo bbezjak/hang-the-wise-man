@@ -3,6 +3,7 @@ import { FETCH_HIGHSCORES } from './../actions/actionTypes';
 
 const initialState = {
   response: {},
+  // mode: "REGISTER",
   mode: "REGISTER",
   userName: "",
   startTime: null as number | null,
