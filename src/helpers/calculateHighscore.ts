@@ -7,5 +7,5 @@ interface UserDataForCalculation {
 
 export default function calculateHighscore({length, uniqueCharacters, duration, errors}: UserDataForCalculation): number {
 
-    return Math.round((length * uniqueCharacters) / ( errors));
+    return Math.round(((length * uniqueCharacters) / (duration * errors)) * 100000);
 }
