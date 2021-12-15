@@ -27,12 +27,11 @@ const App = () => {
     //   </header>
     // </div>
 
-    <>
-    <p>{store}</p>
+    <div className="App">
       {store === "REGISTER" && <EnterPlayerName />}
       {store === "GAME" && <PlayHangman></PlayHangman>}
-      {store === "HIGHSCORES" && <Highscores/>}
-    </>
+      {store === "HIGHSCORES" && <Highscores />}
+    </div>
   );
 };
 
