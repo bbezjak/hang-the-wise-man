@@ -17,7 +17,7 @@ export const VirtualKeyboard = (props: {
   };
 
   return (
-    <div className="text-center">
+    <div className="virtual-keyboard text-center">
       {alphabet.map((letter) => (
         <LetterButton
           key={letter}

@@ -1,9 +1,18 @@
-export const ErrorCounter = (props: {errorCount: number}) => {
+import { useSelector } from "react-redux";
 
-    return (
-        <div>
-            {props.errorCount} / 6
-        </div>
-    )
+export const ErrorCounter = (props: { errorCount: number }) => {
+  const maxErrorNumber: number = useSelector(
+    (state: any) => state.maxErrorNumber
+  );
 
-}
+  return (
+    <div className="d-flex flex-column align-center">
+      <span>
+          Number of errors made
+      </span>
+      <span>
+        {props.errorCount} / {maxErrorNumber}
+      </span>
+    </div>
+  );
+};

@@ -19,6 +19,8 @@ export const PlayHangman = () => {
 
   const response: QuoteResponse = useSelector((state: any) => state.response);
 
+  const maxErrorNumber: number = useSelector((state: any) => state.maxErrorNumber);
+
   const user: string = useSelector((state: any) => state.userName);
 
   const startTime: number = useSelector((state: any) => state.startTime);
@@ -52,7 +54,7 @@ export const PlayHangman = () => {
         if (activeLetters.includes(char.toLowerCase())) {
           return char;
         } else {
-          return "*";
+          return "_";
         }
       } else {
         return char;
@@ -92,6 +94,7 @@ export const PlayHangman = () => {
   const resetGame = () => {
     setActiveLetters([]);
     setErrorNumber(0);
+    setEndTime(null);
     fetchQuote(store.dispatch);
   };
 
@@ -100,33 +103,45 @@ export const PlayHangman = () => {
   };
 
   return (
-    <>
-     <h1 className="page-title">Hang the wise man</h1>
-     <div className="page d-flex flex-column justify-center align-center">
-     
-      <h2>Welcome {user}</h2>
+    <div className="play-hangman">
+      <h1 className="page-title">Hang the wise man</h1>
 
-      <p>{startTime} - {endTime}</p>
+      <div className="page d-flex flex-column justify-center align-center">
+        <h2>Welcome {user}</h2>
 
-      <HangmanDrawing errors={errorNumber}></HangmanDrawing>
+        {/* <p>
+          {startTime} - {endTime}
+        </p> */}
 
-      <ErrorCounter errorCount={errorNumber} />
+        <HangmanDrawing errors={errorNumber}></HangmanDrawing>
 
-      <div className="text-center">{maskedValue}</div>
+        <ErrorCounter errorCount={errorNumber} />
 
-      <Button onClick={resetGame} text="Reset game"></Button>
+        <div className="quote">
+          {maskedValue}
+        </div>
 
-      {userGuessedQuote && (
-        <Button onClick={showHighScore} text="See Highscore"></Button>
-      )}
+        {errorNumber === maxErrorNumber && (
+          <div className="quote">
+            <p>Ahh, you did not get it, asked quote was</p>
+            <p>{response.content}</p>
+          </div>
+        )}
 
-      <VirtualKeyboard
-        activateLetter={activateLetter}
-        activeLetters={activeLetters}
-        disableKeyboard={errorNumber === 6 || userGuessedQuote}
-      ></VirtualKeyboard>
+        <Button onClick={resetGame} text="Reset game"></Button>
+
+        {userGuessedQuote && (
+          <Button onClick={showHighScore} text="See Highscore"></Button>
+        )}
+
+<Button onClick={showHighScore} text="See Highscore"></Button>
+
+        <VirtualKeyboard
+          activateLetter={activateLetter}
+          activeLetters={activeLetters}
+          disableKeyboard={errorNumber === 6 || userGuessedQuote}
+        ></VirtualKeyboard>
+      </div>
     </div>
-    </>
-    
   );
 };

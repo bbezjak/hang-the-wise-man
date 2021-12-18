@@ -3,6 +3,7 @@ import { startNewGame } from "../store/actions/startGameAction";
 import store from "../store";
 import { fetchQuote } from "../store/actions/fetchQuote";
 import { Button } from "../components/Button";
+import { TextInput } from './../components/TextInput';
 
 export const EnterPlayerName = () => {
   const [input, setInput] = useState("");
@@ -19,17 +20,21 @@ export const EnterPlayerName = () => {
       <div className="page d-flex flex-column justify-center align-center">
         <div className="enter-player-name">
           <h2>Please enter your name</h2>
-          <input
-            type="text"
+          
+          <TextInput
+            tabIndex={1}
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={setInput}
           />
+
           <div className="d-flex justify-center">
             <Button
+              tabIndex={2}
               className="width-100"
-              text="StartGame"
+              text="Start Game"
               onClick={startGame}
             ></Button>
+          
           </div>
         </div>
       </div>
