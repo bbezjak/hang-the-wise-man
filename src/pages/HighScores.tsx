@@ -1,49 +1,105 @@
 import { useSelector } from "react-redux";
-import calculateHighscore from "./../helpers/calculateHighscore"
-import { useMemo } from 'react';
+import calculateHighscore from "./../helpers/calculateHighscore";
+import { useMemo, useState } from "react";
+import useWindowSize from "./../hooks/useScreenSize";
 
 export const Highscores = () => {
   const highscores: any[] = useSelector((store: any) => store.response);
 
   const highscoresSorted = useMemo(() => {
     return highscores
-    .map((highscore: any) => (
-      {
+      .map((highscore: any) => ({
         username: highscore.userName,
         length: highscore.length,
         uniqueCharacters: highscore.uniqueCharacters,
         duration: highscore.duration,
         errors: highscore.errors,
-        score: calculateHighscore(highscore)
+        score: calculateHighscore(highscore),
       }))
-    .sort((first: { username: any; score: number; }, second: { username: any; score: number; }) => second.score - first.score)
-  }, [highscores])
+      .sort(
+        (
+          first: { username: any; score: number },
+          second: { username: any; score: number }
+        ) => second.score - first.score
+      );
+  }, [highscores]);
+
+  const [headers, setHeaders] = useState({
+    playerName: "Player name",
+    wordLength: "Word length",
+    uniqueCharacters: "Unique characters",
+    gameTime: "Game time",
+    errorNumber: "Error number",
+    score: "Score",
+  });
+
+  const windowSize = useWindowSize();
 
   return (
     <>
-    <h1 className="page-title">HighScores</h1>
-    <div className="page d-flex flex-column justify-center align-center">
-      <table className="highscores-table">
-        <tr>
-          <th>Player name</th>
-          <th>Word lenght</th>
-          <th>Unique characters</th>
-          <th>Game time</th>
-          <th>Error number</th>
-          <th>Score</th>
-        </tr>
-        {highscoresSorted.map((highscore, index) => (
-            <tr key={index}>
-                <td>{highscore.username}</td>
-                <td>{highscore.length}</td>
-                <td>{highscore.uniqueCharacters}</td>
-                <td>{highscore.duration}</td>
-                <td>{highscore.errors}</td>
-                <td className="font-weight-bold">{highscore.score}</td>
-            </tr>
-        ))}
-      </table>
-    </div>
+      <h1 className="page-title">HighScores</h1>
+      <div className="page d-flex flex-column justify-center align-center">
+        {windowSize.breakpoint === "xs" && (
+          <div className="width-100">
+            {highscoresSorted.map((highscore, index) => (
+              <table className="width-100" key={highscore.username + index}>
+                <tbody className="d-flex flex-column">
+                  <tr className="d-flex justify-space-between">
+                    <th>{headers.playerName}</th>
+                    <td>{highscore.username}</td>
+                  </tr>
+                  <tr className="d-flex justify-space-between">
+                    <th>{headers.wordLength}</th>
+                    <td>{highscore.length}</td>
+                  </tr>
+                  <tr className="d-flex justify-space-between">
+                    <th>{headers.uniqueCharacters}</th>
+                    <td>{highscore.uniqueCharacters}</td>
+                  </tr>
+                  <tr className="d-flex justify-space-between">
+                    <th>{headers.gameTime}</th>
+                    <td>{highscore.duration}</td>
+                  </tr>
+                  <tr className="d-flex justify-space-between">
+                    <th>{headers.errorNumber}</th>
+                    <td>{highscore.errors}</td>
+                  </tr>
+                  <tr className="d-flex justify-space-between">
+                    <th>{headers.score}</th>
+                    <td className="font-weight-bold">{highscore.score}</td>
+                  </tr>
+                </tbody>
+              </table>
+            ))}
+          </div>
+        )}
+
+        {windowSize.breakpoint !== "xs" && (
+          <table className="highscores-table">
+            <thead>
+              <tr>
+                {Object.values(headers).map((header) => (
+                  <th key={header}>{header}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {highscoresSorted.map((highscore, index) => (
+                <tr key={highscore.username + index}>
+                  <td>{highscore.username}</td>
+                  <td className="text-center">{highscore.length}</td>
+                  <td className="text-center">{highscore.uniqueCharacters}</td>
+                  <td className="text-center">{highscore.duration}</td>
+                  <td className="text-center">{highscore.errors}</td>
+                  <td className="text-center font-weight-bold">
+                    {highscore.score}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </>
   );
 };
