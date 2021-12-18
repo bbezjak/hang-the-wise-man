@@ -7,6 +7,7 @@ const initialState = {
   mode: "REGISTER",
   userName: "",
   startTime: null as number | null,
+  maxErrorNumber: 6
 };
 
 export default function rootReducer(state = initialState, action: any) {
