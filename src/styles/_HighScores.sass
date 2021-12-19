@@ -1,5 +1,15 @@
-.highscores-table
-    border: 1px solid blue
-
-    & > td
+.highscores
+    table, th, td
+        padding: 5px
         border: 1px solid blue
+        border-collapse: collapse
+
+        &.table-small
+            th, td
+                border: none
+
+.odd
+    background-color: white
+
+.even
+    background-color: lightgray

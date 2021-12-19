@@ -38,11 +38,16 @@ export const Highscores = () => {
   return (
     <>
       <h1 className="page-title">HighScores</h1>
-      <div className="page d-flex flex-column justify-center align-center">
+      <div className="page highscores d-flex flex-column justify-center align-center">
         {windowSize.breakpoint === "xs" && (
           <div className="width-100">
             {highscoresSorted.map((highscore, index) => (
-              <table className="width-100" key={highscore.username + index}>
+              <table
+                className={`highscores-table table-small width-100 ${
+                  index % 2 === 0 ? "even" : "odd"
+                }`}
+                key={highscore.username + index}
+              >
                 <tbody className="d-flex flex-column">
                   <tr className="d-flex justify-space-between">
                     <th>{headers.playerName}</th>
@@ -85,7 +90,10 @@ export const Highscores = () => {
             </thead>
             <tbody>
               {highscoresSorted.map((highscore, index) => (
-                <tr key={highscore.username + index}>
+                <tr
+                  key={highscore.username + index}
+                  className={index % 2 === 0 ? "even" : "odd"}
+                >
                   <td>{highscore.username}</td>
                   <td className="text-center">{highscore.length}</td>
                   <td className="text-center">{highscore.uniqueCharacters}</td>
