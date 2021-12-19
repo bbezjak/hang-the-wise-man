@@ -1,3 +1,5 @@
+@use 'variables'
+    
 .container
     min-height: 200px
     min-width: 200px
@@ -25,7 +27,7 @@
         max-width: 300px
         
     & > * 
-        background-color: blue
+        background-color: variables.$hangman_primary_color
 
 .bottomLine
     // background-color: blue
@@ -67,7 +69,7 @@
     top: 30%
     left: 36.25%
     border-radius: 50%
-    border: 2px solid blue
+    border: 2px solid variables.$hangman_primary_color
 
 .body
     height: 20%
@@ -111,7 +113,7 @@
     transform: rotate(-15deg)
 
 .eye
-    border: 1px solid blue
+    border: 1px solid variables.$hangman_primary_color
     position: absolute
     top: 30%
     width: 25%
@@ -127,7 +129,7 @@
 .mouth
     border-width: 2px
     border-style: solid
-    border-color: red red transparent transparent
+    border-color: variables.$hangman_secondary_color variables.$hangman_secondary_color transparent transparent
     position: absolute
     width: 30%
     height: 30%

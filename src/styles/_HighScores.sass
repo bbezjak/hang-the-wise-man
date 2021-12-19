@@ -1,7 +1,9 @@
+@use 'variables'
+    
 .highscores
     table, th, td
         padding: 5px
-        border: 1px solid blue
+        border: 1px solid variables.$table_border_color
         border-collapse: collapse
 
         &.table-small
@@ -9,7 +11,7 @@
                 border: none
 
 .odd
-    background-color: white
+    background-color: variables.$table_odd_color
 
 .even
-    background-color: lightgray
+    background-color: variables.$table_even_color

@@ -1,7 +1,9 @@
+@use 'variables'
+    
 button.letterButton
-    background: blue
-    color: white
-    border: 1px solid blue
+    background: variables.$letter_button_color
+    color: variables.$letter_button_color__text
+    border: 1px solid variables.$letter_button_color
     width: 25px
     height: 25px
     border-radius: 5px
@@ -9,5 +11,5 @@ button.letterButton
     cursor: pointer
 
 button.letterButton:disabled
-    background-color: lightblue
-    border-color: blue
+    background-color: variables.$letter_button_color__disabled
+    border-color: variables.$letter_button_color
