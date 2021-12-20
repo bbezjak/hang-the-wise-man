@@ -3,6 +3,7 @@ interface ButtonProps {
   onClick: () => void;
   className?: string;
   tabIndex?: number;
+  disabled?: boolean
 }
 
 export const Button = ({
@@ -10,9 +11,10 @@ export const Button = ({
   onClick,
   className = "",
   tabIndex = undefined,
+  disabled
 }: ButtonProps) => {
   return (
-    <button className={"myButton " + className} onClick={onClick} tabIndex={tabIndex}>
+    <button className={"myButton " + className} onClick={onClick} tabIndex={tabIndex} disabled={disabled}>
       {text}
     </button>
   );

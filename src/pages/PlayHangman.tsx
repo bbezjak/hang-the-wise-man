@@ -31,7 +31,7 @@ export const PlayHangman = () => {
       const letterArray = response.content.split("");
       const unique: string[] = [];
       letterArray.forEach(
-        (letter) => !unique.includes(letter) && unique.push(letter)
+        (letter) => !unique.includes(letter.toLowerCase()) && unique.push(letter.toLowerCase())
       );
 
       return unique;
@@ -79,11 +79,13 @@ export const PlayHangman = () => {
     if (userGuessedQuote) {
       setEndTime(Date.now());
 
+      debugger
+
       const payload = {
         quoteId: response._id,
         length: response.content.length,
         userName: user,
-        uniqueCharacters: uniqueLetters,
+        uniqueCharacters: uniqueLetters.length,
         duration: (endTime as number) - startTime,
         errors: errorNumber,
       };

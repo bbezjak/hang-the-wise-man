@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { startNewGame } from "../store/actions/startGameAction";
 import store from "../store";
 import { fetchQuote } from "../store/actions/fetchQuote";
@@ -8,6 +8,10 @@ import { TextInput } from './../components/TextInput';
 export const EnterPlayerName = () => {
   const [input, setInput] = useState("");
 
+  const userNameEntered = useMemo(() => {
+    return input.length > 0
+  }, [input])
+  
   const startGame = () => {
     console.log(input);
     startNewGame(store.dispatch, input);
@@ -33,6 +37,7 @@ export const EnterPlayerName = () => {
               className="width-100"
               text="Start Game"
               onClick={startGame}
+              disabled={!userNameEntered}
             ></Button>
           
           </div>
