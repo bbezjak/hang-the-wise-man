@@ -1,17 +1,39 @@
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 
-export const ErrorCounter = (props: { errorCount: number }) => {
+interface ErrorCouterProps {
+  errorCount: number,
+  firstMoveMade: boolean
+}
+
+export const ErrorCounter = ({ errorCount, firstMoveMade }: ErrorCouterProps) => {
   const maxErrorNumber: number = useSelector(
     (state: any) => state.maxErrorNumber
   );
 
+  const message = useMemo(() => {
+    if(!firstMoveMade) {
+      return 'Off we go :D'
+    } else {
+      if(errorCount === 0) {
+        return 'We are doing great :D'
+      } else if(errorCount < maxErrorNumber / 2){
+        return 'We are still on the right track :)'
+      } else if((errorCount >= maxErrorNumber / 2) && (errorCount < maxErrorNumber)) {
+        return "We need to be more carefull"
+      } else if(errorCount === maxErrorNumber) {
+        return "Lets try again, we can do it next time"
+      }
+    }
+  }, [firstMoveMade, errorCount, maxErrorNumber])
+
   return (
-    <div className="d-flex flex-column align-center">
+    <div className="error-counter d-flex flex-column align-center">
       <span>
-          Number of errors made
+          {message}
       </span>
       <span>
-        {props.errorCount} / {maxErrorNumber}
+        {errorCount} / {maxErrorNumber}
       </span>
     </div>
   );

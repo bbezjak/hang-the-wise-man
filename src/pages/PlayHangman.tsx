@@ -9,6 +9,7 @@ import { submitScore } from "../store/actions/submitScore";
 import { fetchHighscore } from "../store/actions/fetchHighscore";
 import { HangmanDrawing } from "../components/HangmanDrawing";
 import { Button } from "../components/Button";
+import { QuoteShower } from "../components/QuoteShower";
 
 export const PlayHangman = () => {
   const [activeLetters, setActiveLetters] = useState([] as string[]);
@@ -49,7 +50,7 @@ export const PlayHangman = () => {
 
   const maskedValue = useMemo(() => {
     if (!response.content) return "";
-    const test = response.content.split("").map((char) => {
+    const lettersArray = response.content.split("").map((char) => {
       if (char.match(/[a-z]/i)) {
         if (activeLetters.includes(char.toLowerCase())) {
           return char;
@@ -60,8 +61,8 @@ export const PlayHangman = () => {
         return char;
       }
     });
-    const test2 = test.join("");
-    return test2;
+    const joined = lettersArray.join("");
+    return joined;
   }, [response.content, activeLetters]);
 
   const userGuessedQuote = useMemo(() => {
@@ -98,6 +99,8 @@ export const PlayHangman = () => {
     fetchQuote(store.dispatch);
   };
 
+  const firstMoveMade = useMemo(() => {return activeLetters.length > 0}, [activeLetters]);
+
   const showHighScore = () => {
     fetchHighscore(store.dispatch);
   };
@@ -109,32 +112,25 @@ export const PlayHangman = () => {
       <div className="page d-flex flex-column justify-center align-center">
         <h2>Welcome {user}</h2>
 
-        {/* <p>
-          {startTime} - {endTime}
-        </p> */}
-
         <HangmanDrawing errors={errorNumber}></HangmanDrawing>
 
-        <ErrorCounter errorCount={errorNumber} />
+        <ErrorCounter errorCount={errorNumber} firstMoveMade={firstMoveMade}/>
 
-        <div className="quote">
+        {/* <div className="quote font-weight-bold">
           {maskedValue}
-        </div>
+        </div> */}
 
-        {errorNumber === maxErrorNumber && (
+        <QuoteShower maskedQuote={maskedValue} quote={response.content} activeLetters={activeLetters} errorCount={errorNumber}></QuoteShower>
+
+        {/* {errorNumber === maxErrorNumber && (
           <div className="quote">
-            <p>Ahh, you did not get it, asked quote was</p>
-            <p>{response.content}</p>
+            <p className="font-weight-bold">{response.content}</p>
           </div>
-        )}
+        )} */}
 
-        <Button onClick={resetGame} text="Reset game"></Button>
+        <Button onClick={resetGame} className="reset-button" text="Reset game"></Button>
 
-        {userGuessedQuote && (
-          <Button onClick={showHighScore} text="See Highscore"></Button>
-        )}
-
-<Button onClick={showHighScore} text="See Highscore"></Button>
+        <Button onClick={showHighScore} text="See Highscore" className={!userGuessedQuote ? "visibility-hidden" : ""}></Button>
 
         <VirtualKeyboard
           activateLetter={activateLetter}
