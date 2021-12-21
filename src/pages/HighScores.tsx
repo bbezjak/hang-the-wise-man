@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import calculateHighscore from "./../helpers/calculateHighscore";
 import { useMemo, useState } from "react";
 import useWindowSize from "./../hooks/useScreenSize";
+import { PageTitle } from "../components/PageTitle";
 
 export const Highscores = () => {
   const highscores: any[] = useSelector((store: any) => store.response);
@@ -37,7 +38,7 @@ export const Highscores = () => {
 
   return (
     <>
-      <h1 className="page-title">HighScores</h1>
+      <PageTitle title="HighScores"></PageTitle>
       <div className="page highscores d-flex flex-column justify-center align-center">
         {windowSize.breakpoint === "xs" && (
           <div className="width-100">

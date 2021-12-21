@@ -10,6 +10,7 @@ import { fetchHighscore } from "../store/actions/fetchHighscore";
 import { HangmanDrawing } from "../components/HangmanDrawing";
 import { Button } from "../components/Button";
 import { QuoteShower } from "../components/QuoteShower";
+import { PageTitle } from "../components/PageTitle";
 
 export const PlayHangman = () => {
   const [activeLetters, setActiveLetters] = useState([] as string[]);
@@ -109,9 +110,9 @@ export const PlayHangman = () => {
 
   return (
     <div className="play-hangman">
-      <h1 className="page-title">Hang the wise man</h1>
+       <PageTitle title="Hang the wise man"></PageTitle>
 
-      <div className="page d-flex flex-column justify-center align-center">
+        <div className="page d-flex flex-column justify-center align-center">
         <h2>Welcome {user}</h2>
 
         <HangmanDrawing errors={errorNumber}></HangmanDrawing>
