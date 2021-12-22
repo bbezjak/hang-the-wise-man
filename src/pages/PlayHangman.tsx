@@ -19,8 +19,6 @@ export const PlayHangman = () => {
 
   const [errorNumber, setErrorNumber] = useState(0);
 
-  const [endTime, setEndTime] = useState(null as null | number);
-
   const response: QuoteResponse = useSelector((state: any) => state.response);
 
   const maxErrorNumber: number = useSelector(
@@ -51,11 +49,12 @@ export const PlayHangman = () => {
     if (response && response.content) {
       const letterArray = response.content.split("");
       const unique: string[] = [];
-      letterArray.forEach(
-        (letter) =>
-          !unique.includes(letter.toLowerCase()) &&
-          unique.push(letter.toLowerCase())
-      );
+      letterArray.forEach((letter) => {
+        const lowercase = letter.toLowerCase();
+        if (isCharLetter(lowercase) && !unique.includes(letter.toLowerCase())) {
+          unique.push(letter.toLowerCase());
+        }
+      });
 
       return unique;
     } else {
@@ -92,14 +91,12 @@ export const PlayHangman = () => {
 
   useEffect(() => {
     if (userGuessedQuote) {
-      setEndTime(Date.now());
-
       const payload = {
         quoteId: response._id,
         length: response.content.length,
         userName: user,
         uniqueCharacters: uniqueLetters.length,
-        duration: (endTime as number) - startTime,
+        duration: Date.now() - startTime,
         errors: errorNumber,
       };
 
@@ -110,7 +107,6 @@ export const PlayHangman = () => {
   const resetGame = () => {
     setActiveLetters([]);
     setErrorNumber(0);
-    setEndTime(null);
     fetchQuote(store.dispatch);
   };
 
