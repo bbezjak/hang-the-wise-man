@@ -11,6 +11,8 @@ import { HangmanDrawing } from "../components/HangmanDrawing";
 import { Button } from "../components/Button";
 import { QuoteShower } from "../components/QuoteShower";
 import { PageTitle } from "../components/PageTitle";
+import { useKeyboardLetters } from "./../hooks/useKeyboardLetters";
+import { isCharLetter } from "../helpers/isCharLetter";
 
 export const PlayHangman = () => {
   const [activeLetters, setActiveLetters] = useState([] as string[]);
@@ -21,25 +23,13 @@ export const PlayHangman = () => {
 
   const response: QuoteResponse = useSelector((state: any) => state.response);
 
-  const maxErrorNumber: number = useSelector((state: any) => state.maxErrorNumber);
+  const maxErrorNumber: number = useSelector(
+    (state: any) => state.maxErrorNumber
+  );
 
   const user: string = useSelector((state: any) => state.userName);
 
   const startTime: number = useSelector((state: any) => state.startTime);
-
-  const uniqueLetters = useMemo(() => {
-    if (response && response.content) {
-      const letterArray = response.content.split("");
-      const unique: string[] = [];
-      letterArray.forEach(
-        (letter) => !unique.includes(letter.toLowerCase()) && unique.push(letter.toLowerCase())
-      );
-
-      return unique;
-    } else {
-      return [];
-    }
-  }, [response]);
 
   const activateLetter = (letter: string) => {
     setActiveLetters([...activeLetters, letter.toLowerCase()]);
@@ -49,10 +39,34 @@ export const PlayHangman = () => {
     }
   };
 
+  const letter = useKeyboardLetters();
+
+  useEffect(() => {
+    if (letter) {
+      activateLetter(letter.toLowerCase());
+    }
+  }, [letter]);
+
+  const uniqueLetters = useMemo(() => {
+    if (response && response.content) {
+      const letterArray = response.content.split("");
+      const unique: string[] = [];
+      letterArray.forEach(
+        (letter) =>
+          !unique.includes(letter.toLowerCase()) &&
+          unique.push(letter.toLowerCase())
+      );
+
+      return unique;
+    } else {
+      return [];
+    }
+  }, [response]);
+
   const maskedValue = useMemo(() => {
     if (!response.content) return "";
     const lettersArray = response.content.split("").map((char) => {
-      if (char.match(/[a-z]/i)) {
+      if (isCharLetter(char)) {
         if (activeLetters.includes(char.toLowerCase())) {
           return char;
         } else {
@@ -80,8 +94,6 @@ export const PlayHangman = () => {
     if (userGuessedQuote) {
       setEndTime(Date.now());
 
-      debugger
-
       const payload = {
         quoteId: response._id,
         length: response.content.length,
@@ -102,7 +114,9 @@ export const PlayHangman = () => {
     fetchQuote(store.dispatch);
   };
 
-  const firstMoveMade = useMemo(() => {return activeLetters.length > 0}, [activeLetters]);
+  const firstMoveMade = useMemo(() => {
+    return activeLetters.length > 0;
+  }, [activeLetters]);
 
   const showHighScore = () => {
     fetchHighscore(store.dispatch);
@@ -110,35 +124,38 @@ export const PlayHangman = () => {
 
   return (
     <div className="play-hangman">
-       <PageTitle title="Hang the wise man"></PageTitle>
+      <PageTitle title="Hang the wise man"></PageTitle>
 
-        <div className="page d-flex flex-column justify-center align-center">
+      <div className="page-content d-flex flex-column justify-center align-center">
         <h2>Welcome {user}</h2>
 
         <HangmanDrawing errors={errorNumber}></HangmanDrawing>
 
-        <ErrorCounter errorCount={errorNumber} firstMoveMade={firstMoveMade}/>
+        <ErrorCounter errorCount={errorNumber} firstMoveMade={firstMoveMade} />
 
-        {/* <div className="quote font-weight-bold">
-          {maskedValue}
-        </div> */}
+        <QuoteShower
+          maskedQuote={maskedValue}
+          quote={response.content}
+          activeLetters={activeLetters}
+          errorCount={errorNumber}
+        ></QuoteShower>
 
-        <QuoteShower maskedQuote={maskedValue} quote={response.content} activeLetters={activeLetters} errorCount={errorNumber}></QuoteShower>
+        <Button
+          onClick={resetGame}
+          className="reset-button"
+          text="Reset game"
+        ></Button>
 
-        {/* {errorNumber === maxErrorNumber && (
-          <div className="quote">
-            <p className="font-weight-bold">{response.content}</p>
-          </div>
-        )} */}
-
-        <Button onClick={resetGame} className="reset-button" text="Reset game"></Button>
-
-        <Button onClick={showHighScore} text="See Highscore" className={!userGuessedQuote ? "visibility-hidden" : ""}></Button>
+        <Button
+          onClick={showHighScore}
+          text="See Highscore"
+          className={!userGuessedQuote ? "visibility-hidden" : ""}
+        ></Button>
 
         <VirtualKeyboard
           activateLetter={activateLetter}
           activeLetters={activeLetters}
-          disableKeyboard={errorNumber === 6 || userGuessedQuote}
+          disableKeyboard={errorNumber === maxErrorNumber || userGuessedQuote}
         ></VirtualKeyboard>
       </div>
     </div>

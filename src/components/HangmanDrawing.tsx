@@ -5,7 +5,6 @@ export const HangmanDrawing = (props: { errors: number }) => {
 
   return (
     <>
-      {/* <p>{JSON.stringify(size)}</p> */}
       <div className={`container ${size.breakpoint}`}>
         <div className="bottomLine"></div>
         <div className="verticalLine"></div>

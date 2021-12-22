@@ -6,6 +6,7 @@ export const VirtualKeyboard = (props: {
   activeLetters: string[];
   disableKeyboard: boolean;
 }) => {
+  
   const [alphabet] = useState(
     Array.from(Array(26))
       .map((e, i) => i + 65)

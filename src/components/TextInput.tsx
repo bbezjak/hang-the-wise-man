@@ -6,7 +6,7 @@ interface TextInputProps {
 
 export const TextInput = ({ tabIndex, value, onChange }: TextInputProps) => {
 
-    const invokeCallback = (e: string) => {
+    const onChangeCallback = (e: string) => {
         if(onChange) {
             onChange(e);
         }
@@ -14,7 +14,7 @@ export const TextInput = ({ tabIndex, value, onChange }: TextInputProps) => {
 
   return (
     <>
-      <input className="text-input" tabIndex={tabIndex} value={value} onChange={(e) => invokeCallback(e.target.value)} />
+      <input className="text-input" tabIndex={tabIndex} value={value} onChange={(e) => onChangeCallback(e.target.value)} />
     </>
   );
 };

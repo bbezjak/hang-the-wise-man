@@ -39,7 +39,7 @@ export const Highscores = () => {
   return (
     <>
       <PageTitle title="HighScores"></PageTitle>
-      <div className="page highscores d-flex flex-column justify-center align-center">
+      <div className="page-content highscores d-flex flex-column justify-center align-center">
         {windowSize.breakpoint === "xs" && (
           <div className="width-100">
             {highscoresSorted.map((highscore, index) => (

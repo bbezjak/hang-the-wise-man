@@ -22,7 +22,7 @@ export const EnterPlayerName = () => {
   return (
     <>
       <PageTitle title="Welcome player"></PageTitle>
-      <div className="page d-flex flex-column justify-center align-center">
+      <div className="page-content d-flex flex-column justify-center align-center">
         <div className="enter-player-name">
           <h2>Please enter your name</h2>
 
