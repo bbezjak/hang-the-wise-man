@@ -4,4 +4,4 @@ Before starting this application firstly you need to execute command `npm instal
 
 # Testing application
 
-To run unit tests you can use command `npm run test`. There are 4 unit tests in total for testing haighscore calculation method. 
+To run unit tests you can use command `npm run test`. There are 4 unit tests in total for testing highscore calculation method. 
